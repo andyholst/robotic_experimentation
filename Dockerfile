@@ -1,7 +1,8 @@
 FROM ros:foxy
 
-RUN mkdir /ros2_home/src
+RUN mkdir -p /ros2_home/src
 
-WORKDIR /ros2_home
+WORKDIR /ros2_home/src
 
-CMD ["ros2", "launch", "demo_nodes_cpp", "talker_listener.launch.py"]
+CMD ["bash", "-c", "colcon build --packages-select robot_prototype && \
+. install/local_setup.bash && ros2 run robot_prototype robot_node"]
