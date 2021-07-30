@@ -38,7 +38,7 @@ gazebo
 ## Modeling with Blender in Docker
 ```bash
 xhost +
-docker build -f DockerfileBlender -t blender-in-docker .
+docker build -f blender_in_docker/Dockerfile -t blender-in-docker .
 docker run -it \
 -v ${PWD}/models:/models \
 --device=/dev/dri \
@@ -48,4 +48,22 @@ docker run -it \
 --name blender \
 blender-in-docker \
 blender
+```
+
+## Modeling with Fusion360 in Docker
+```bash
+xhost +
+docker build -f fusion360_in_docker/Dockerfile -t fusion360-in-docker .
+docker run -it \
+-v ${PWD}/models:/models \
+--device=/dev/dri \
+--group-add video \
+--volume=/tmp/.X11-unix:/tmp/.X11-unix \
+--env="DISPLAY=$DISPLAY" \
+--name install-fusion360 \
+fusion360-in-docker
+
+# Inside the container at the ubuntu home directory execute the following commands
+install_fusion360.sh # Saved the container state after this with 'git commit container-hash name-of-image' to work with 3d models
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" #  Be sure to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
 ```
