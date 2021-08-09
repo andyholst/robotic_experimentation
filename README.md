@@ -64,6 +64,6 @@ docker run -it \
 fusion360-in-docker
 
 # Inside the container at the ubuntu home directory execute the following commands
-install_fusion360.sh # Saved the container state after this with 'git commit container-hash name-of-image' to work with 3d models
+./install_fusion360.sh # Saved the container state after this with 'git commit container-hash name-of-image' to work with 3d models
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" #  Be sure to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
 ```
