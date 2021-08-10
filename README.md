@@ -66,5 +66,9 @@ fusion360-in-docker
 # Inside the container at the ubuntu home directory execute the following commands
 ./install_fusion360.sh # Saved the container state after this with 'git commit container-hash name-of-image' to work with 3d models
 source ~/.bashrc # Source the latest environment variables made in the watch_fusion360_install_proccess.sh script
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" #  Be sure to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
+
+#  Fusion 360 in WINE works best with DirectX 9 or OpenGL, is set to 'DirectX 9 is set by default if vulkan version 
+#  d9vk is installed'.
+#  You might need to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" 
 ```
