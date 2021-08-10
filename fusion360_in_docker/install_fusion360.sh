@@ -17,12 +17,9 @@ WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q corefonts
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q fontsmooth=rgb
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q winhttp
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q vcrun2017
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q dxvk
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks vulcan=builtin
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks vcruntime140_1=native
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks d3d9=builtin
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks d3d11=native
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q d9vk
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q win10
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks vcruntime140_1=native
 
 touch log.txt
 ./watch_fusion360_install_proccess.sh &
