@@ -16,7 +16,7 @@ RUN apt-key add winehq.key
 RUN apt update
 RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
 
-ARG WINE_VERSION="5.7~focal"
+ARG WINE_VERSION="6.14~focal-1"
 RUN DEBIAN_FRONTEND=noninteractive apt install -y winehq-staging="${WINE_VERSION}" wine-staging="${WINE_VERSION}" \
 wine-staging-amd64="${WINE_VERSION}" wine-staging-i386="${WINE_VERSION}"
 RUN DEBIAN_FRONTEND=noninteractive apt install -y winetricks

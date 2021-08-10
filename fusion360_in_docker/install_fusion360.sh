@@ -11,8 +11,6 @@ WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} msiexec /i wine-gec
 rm wine-mono-6.3.0-x86.msi
 rm wine-gecko-2.47.2-x86_64.msi
 
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q atmlib
-WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q gdiplus
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q corefonts
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q fontsmooth=rgb
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q winhttp
