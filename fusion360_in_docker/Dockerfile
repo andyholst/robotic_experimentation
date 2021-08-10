@@ -1,25 +1,25 @@
 FROM ubuntu:20.04
 
 RUN dpkg --add-architecture i386
-RUN apt-get update && apt-get upgrade -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get upgrade -y
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl cabextract wget software-properties-common winbind \
 libvulkan1 libvulkan1:i386 libvulkan-dev vulkan-utils sudo xterm apt-utils zenity libnss3 libgst-dev libudev-dev \
 p7zip p7zip-full p7zip-rar sed xvfb vim mesa-utils
 
 RUN add-apt-repository ppa:kisak/kisak-mesa
-RUN apt update
-RUN DEBIAN_FRONTEND=noninteractive apt install -y libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
 
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
 RUN apt-key add winehq.key
-RUN apt update
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
 RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
 
 ARG WINE_VERSION="6.14~focal-1"
-RUN DEBIAN_FRONTEND=noninteractive apt install -y winehq-staging="${WINE_VERSION}" wine-staging="${WINE_VERSION}" \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y winehq-staging="${WINE_VERSION}" wine-staging="${WINE_VERSION}" \
 wine-staging-amd64="${WINE_VERSION}" wine-staging-i386="${WINE_VERSION}"
-RUN DEBIAN_FRONTEND=noninteractive apt install -y winetricks
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y winetricks
 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1001 ubuntu
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

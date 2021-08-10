@@ -1,5 +1,15 @@
 # ROS2
 
+## To refresh internet configuration settings for Docker in Debian if internet connection is lost from a Docker build
+
+```bash
+pkill docker
+iptables -t nat -F
+ifconfig docker0 down
+brctl delbr docker0
+docker -d
+```
+
 ## Create a new ROS2 python package
 ```bash
 docker run -v ${PWD}:/src ros:foxy bash -c "cd src && \
@@ -64,13 +74,40 @@ docker run -it \
 fusion360-in-docker
 
 # Inside the container at the ubuntu home directory execute the following commands
-./install_fusion360.sh # Saved the container state after this with 'git commit container-hash name-of-image' to work with 3d models
+./install_fusion360.sh # Saved the container state after this with 'docker commit container-hash name-of-image' to work with 3d models
 source ~/.bashrc # Source the latest environment variables made in the watch_fusion360_install_proccess.sh script
 
 #  Fusion 360 in WINE works best with DirectX 9 or OpenGL, is set to 'DirectX 9 is set by default if vulkan version 
 #  d9vk is installed'.
 #  You might need to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" 
+```
+# Save the container state to be able to smoothly work with 3d models afterwards
+```bash
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}"
+```
+
+## Modeling with IronCad in Docker
+
+```bash
+xhost +
+docker build -f ironcad_in_docker/Dockerfile -t ironcad-in-docker .
+
+docker run -it --rm \
+-v ${PWD}/models:/models \
+--device=/dev/dri \
+--group-add video \
+--volume=/tmp/.X11-unix:/tmp/.X11-unix \
+--env="DISPLAY=$DISPLAY" \
+--name install-ironcad \
+ironcad-in-docker
+
+# Inside the container at the ubuntu home directory execute the following commands
+sudo ./install_ironcad.sh
+
+# Then start IronCAD with command:
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} \
+"${WINE_PATH}"/drive_c/Program\ Files/IronCAD/2019/bin/IRONCAD.exe
 ```
 
 ## Compile WINE i386/amd64 in Docker
