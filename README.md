@@ -74,6 +74,10 @@ WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}"
 ```
 
 ## Compile WINE i386/amd64 in Docker
+
+Dockerfile that compiles WINE version 6.19 from source with necessary development dependencies included for both
+i386 and amd64 architecture in a Debian buster distro environment.
+
 ```bash
 xhost +
 docker build -f wine_from_source/Dockerfile -t wine-in-docker .
