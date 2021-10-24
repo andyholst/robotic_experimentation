@@ -72,3 +72,17 @@ source ~/.bashrc # Source the latest environment variables made in the watch_fus
 #  You might need to change graphic rendering driver from auto to 'DirectX 9'/OpenGL to get the rendering working
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" ${WINE} "${FUSION_360_EXE}" 
 ```
+
+## Compile WINE i386/amd64 in Docker
+```bash
+xhost +
+docker build -f wine_from_source/Dockerfile -t wine-in-docker .
+docker run -it \
+-v ${PWD}/models:/models \
+--device=/dev/dri \
+--group-add video \
+--volume=/tmp/.X11-unix:/tmp/.X11-unix \
+--env="DISPLAY=$DISPLAY" \
+--name install-wine-from-source \
+wine-in-docker
+```
