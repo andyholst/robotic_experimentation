@@ -6,7 +6,7 @@ fakeroot dh-make git libasound2-dev libdbus-1-dev libfontconfig-dev libfreetype6
 libtiff-dev libgl-dev libunwind-dev libxml2-dev libxslt1-dev libgstreamer1.0-dev \
 libgstreamer-plugins-base1.0-dev libmpg123-dev libosmesa6-dev libsdl2-dev libudev-dev libvulkan-dev \
 ocl-icd-opencl-dev libusb-1.0-0-dev libjxr-dev libgtk2.0-0 mesa-vulkan-drivers gcc-mingw-w64 \
-pkg-config
+pkg-config mesa-utils
 
 RUN add-apt-repository 'deb http://deb.debian.org/debian buster-backports main'
 RUN apt-get update
@@ -28,13 +28,18 @@ RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/debian/ buster mai
 
 RUN echo "deb-src https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-ARG WINE_VERSION="6.19~buster"
+ARG VERSION="6.20"
+ARG WINE_VERSION="${VERSION}~buster"
 ARG WINE_DEB_VERSION="${WINE_VERSION}-1"
 
 RUN DEBIAN_FRONTEND=noninteractive apt build-dep -y wine="${WINE_DEB_VERSION}"
 
-RUN git clone -b "wine-6.19" git://source.winehq.org/git/wine.git /usr/src/wine-source
+RUN git clone -b "wine-${VERSION}" git://source.winehq.org/git/wine.git /usr/src/wine-source
+RUN git clone -b "v${VERSION}" https://github.com/wine-staging/wine-staging.git /usr/src/wine-staging
 RUN mkdir -p /usr/src/wine64
+
+WORKDIR /usr/src/wine-staging/patches
+RUN exec /bin/bash -c './patchinstall.sh DESTDIR=/usr/src/wine-source --all --force-autoconf'
 
 WORKDIR /usr/src/wine64
 
@@ -49,7 +54,7 @@ fakeroot dh-make git libasound2-dev libdbus-1-dev libfontconfig-dev libfreetype6
 libtiff-dev libgl-dev libunwind-dev libxml2-dev libxslt1-dev libgstreamer1.0-dev \
 libgstreamer-plugins-base1.0-dev libmpg123-dev libosmesa6-dev libsdl2-dev libudev-dev libvulkan-dev \
 ocl-icd-opencl-dev libusb-1.0-0-dev libjxr-dev libgtk2.0-0 mesa-vulkan-drivers gcc-mingw-w64 \
-pkg-config
+pkg-config mesa-utils
 
 RUN add-apt-repository 'deb http://deb.debian.org/debian buster-backports main'
 RUN apt-get update
@@ -71,7 +76,8 @@ RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/debian/ buster mai
 
 RUN echo "deb-src https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-ARG WINE_VERSION="6.19~buster"
+ARG VERSION="6.20"
+ARG WINE_VERSION="${VERSION}~buster"
 ARG WINE_DEB_VERSION="${WINE_VERSION}-1"
 
 RUN DEBIAN_FRONTEND=noninteractive apt build-dep -y wine="${WINE_DEB_VERSION}"
@@ -89,7 +95,7 @@ WORKDIR /usr/src/wine32
 
 RUN exec /bin/bash -c 'PKG_CONFIG_PATH=/usr/lib/pkgconfig ../wine-source/configure --with-wine64=../wine64 --with-wine-tools=../wine32-tools --prefix=/opt/wine-staging'
 RUN exec /bin/bash -c 'make -j7'
-RUN exec /bin/bash -c 'checkinstall -D --pkgname=wine-local --pkgversion=6.19 --nodoc --install=yes'
+RUN exec /bin/bash -c 'checkinstall -D --pkgname=wine-local --pkgversion="${VERSION}" --nodoc --install=yes'
 
 FROM debian:buster-slim
 
@@ -127,7 +133,8 @@ RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/debian/ buster mai
 
 RUN echo "deb-src https://dl.winehq.org/wine-builds/debian/ buster main" >> /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-ARG WINE_VERSION="6.19~buster"
+ARG VERSION="6.20"
+ARG WINE_VERSION="${VERSION}~buster"
 ARG WINE_DEB_VERSION="${WINE_VERSION}-1"
 
 RUN DEBIAN_FRONTEND=noninteractive apt build-dep -y wine="${WINE_DEB_VERSION}"
@@ -149,7 +156,7 @@ RUN dpkg -i oss-linux-v4.2-2020-amd64.deb
 
 WORKDIR /home/ubuntu/wine64
 
-RUN exec /bin/bash -c 'checkinstall -D --pkgname=wine-local --pkgversion=6.19 --nodoc --install=yes'
+RUN exec /bin/bash -c 'checkinstall -D --pkgname=wine-local --pkgversion="${VERSION}" --nodoc --install=yes'
 
 WORKDIR /home/ubuntu
 
