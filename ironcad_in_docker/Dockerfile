@@ -15,7 +15,6 @@ WORKDIR /usr/src
 RUN git clone https://github.com/Frogging-Family/wine-tkg-git
 
 WORKDIR /usr/src/wine-tkg-git
-RUN git checkout 6bffd57b208cb28e54a78ef09621f3db437f5799
 
 RUN chown winer -R .
 
@@ -52,7 +51,7 @@ RUN chmod +x IronCADDCS2019_x64.exe
 
 RUN touch /home/winer/.bashrc
 RUN chown winer /home/winer/.bashrc
-RUN pacman -U --noconfirm /tmp/wine-tkg/wine-tkg-staging-fsync-git-6.20.*.pkg.tar.zst
+RUN pacman -U --noconfirm /tmp/wine-tkg/wine-tkg-staging-fsync-git*.pkg.tar.zst
 RUN rm -fr /tmp/*
 RUN rm -fr /usr/src/wine-tkg-git
 
