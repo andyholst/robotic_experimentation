@@ -7,7 +7,7 @@ FROM archlinux:base-devel-20211017.0.36769
 
 RUN  echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 RUN pacman -Syu --noconfirm base-devel sudo git vulkan-tools vulkan-validation-layers vulkan-headers vulkan-radeon \
-nvidia-utils vulkan-intel
+nvidia-utils vulkan-intel cabextract
 RUN useradd winer -G wheel && echo "winer ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 WORKDIR /usr/src
