@@ -13,6 +13,7 @@ rm wine-gecko-2.47.2-x86_64.msi
 
 wineserver -k
 
+WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q vcrun2017
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q d3dcompiler_47
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q dxvk
 WINEPREFIX="${WINE_PATH}" WINEARCH="${ARCHITECTURE}" winetricks -q win10
