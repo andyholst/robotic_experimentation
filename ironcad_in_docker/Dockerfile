@@ -8,7 +8,7 @@ RUN useradd winer -G wheel && echo "winer ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoe
 WORKDIR /usr/src
 
 RUN git clone https://github.com/Frogging-Family/wine-tkg-git
-RUN cd wine-tkg-git && git checkout e27b32fbd2358e1dc70c59a18d74cd62cd08db49
+RUN cd wine-tkg-git
 WORKDIR /usr/src/wine-tkg-git
 
 RUN chown winer -R .
