@@ -1,4 +1,4 @@
-FROM archlinux:base-devel-20211017.0.36769
+FROM archlinux:base-devel-20220522.0.57327
 
 # Replace Vulkan child window support with patch needed to use 3D CAD applications with DirectX 11/9 to Vulkan
 # transformation rendering
