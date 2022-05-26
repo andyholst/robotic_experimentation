@@ -1,10 +1,5 @@
 FROM archlinux:base-devel-20220522.0.57327
 
-# Replace Vulkan child window support with patch needed to use 3D CAD applications with DirectX 11/9 to Vulkan
-# transformation rendering
-# https://github.com/Frogging-Family/wine-tkg-git/issues/358
-# https://github.com/Frogging-Family/wine-tkg-git/commit/d215bb734dd41274105703378043fe4130abfed7
-
 RUN  echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 RUN pacman -Syu --noconfirm base-devel sudo git vulkan-tools vulkan-validation-layers vulkan-headers vulkan-radeon \
 nvidia-utils vulkan-intel cabextract p7zip samba wget curl vim
@@ -13,7 +8,7 @@ RUN useradd winer -G wheel && echo "winer ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoe
 WORKDIR /usr/src
 
 RUN git clone https://github.com/Frogging-Family/wine-tkg-git
-
+RUN cd wine-tkg-git && git checkout e27b32fbd2358e1dc70c59a18d74cd62cd08db49
 WORKDIR /usr/src/wine-tkg-git
 
 RUN chown winer -R .
