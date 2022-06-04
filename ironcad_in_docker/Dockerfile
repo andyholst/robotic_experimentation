@@ -34,6 +34,14 @@ RUN chmod +x /usr/bin/winetricks
 WORKDIR /home/winer
 RUN chown -R winer /home/winer
 
+RUN touch /home/winer/.bashrc
+RUN chown winer /home/winer/.bashrc
+RUN pacman -U --noconfirm /tmp/wine-tkg/wine-tkg-staging-fsync-git*.pkg.tar.zst
+RUN rm -fr /tmp/*
+RUN rm -fr /usr/src/wine-tkg-git
+
+USER winer
+
 COPY ${PWD}/ironcad_in_docker/install_ironcad.sh .
 RUN chown winer install_ironcad.sh
 RUN chmod +x install_ironcad.sh
@@ -43,14 +51,6 @@ RUN chmod +x install_ironcad.sh
 COPY ${PWD}/ironcad_in_docker/IronCADDCS2019x64.exe .
 RUN chown winer IronCADDCS2019x64.exe
 RUN chmod +x IronCADDCS2019x64.exe
-
-RUN touch /home/winer/.bashrc
-RUN chown winer /home/winer/.bashrc
-RUN pacman -U --noconfirm /tmp/wine-tkg/wine-tkg-staging-fsync-git*.pkg.tar.zst
-RUN rm -fr /tmp/*
-RUN rm -fr /usr/src/wine-tkg-git
-
-USER winer
 
 RUN echo "export HOME_PATH=${HOME_PATH}" >> "${HOME_PATH}/.bashrc"
 RUN echo "export WINE_PATH=${WINE_PATH}" >> "${HOME_PATH}/.bashrc"
