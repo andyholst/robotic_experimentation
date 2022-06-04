@@ -8,7 +8,7 @@ RUN useradd user -G wheel && echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 WORKDIR /usr/src
 
 RUN git clone https://github.com/Frogging-Family/wine-tkg-git
-RUN cd wine-tkg-git && git checkout f03686f
+RUN cd wine-tkg-git
 WORKDIR /usr/src/wine-tkg-git
 
 RUN chown user -R .
