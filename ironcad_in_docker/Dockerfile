@@ -1,7 +1,8 @@
 FROM archlinux:latest
 
 RUN  echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-RUN pacman -Syu --noconfirm sudo git wget curl vim
+RUN pacman -Syu --noconfirm base-devel sudo git vulkan-tools vulkan-validation-layers vulkan-headers vulkan-radeon \
+nvidia-utils vulkan-intel cabextract p7zip samba wget curl vim
 RUN useradd user -G wheel && echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 WORKDIR /usr/src
@@ -13,6 +14,8 @@ WORKDIR /usr/src/wine-tkg-git
 RUN chown user -R .
 
 USER user
+
+RUN sed '/_hotfix="EGS" _hotfix_boundary="" _hotfix_import/d' wine-tkg-git/wine-tkg-patches/hotfixes/hotfixer
 
 WORKDIR /usr/src/wine-tkg-git/wine-tkg-git
 
