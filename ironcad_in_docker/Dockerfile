@@ -16,8 +16,7 @@ RUN chown user -R .
 USER user
 
 RUN sed '/_hotfix="EGS" _hotfix_boundary="" _hotfix_import/d' wine-tkg-git/wine-tkg-patches/hotfixes/hotfixer
-RUN sed '/_hotfixes+=("$_where"/wine-tkg-patches/hotfixes/EGS/dwmapi_EGS_fixup)/d' \
-    wine-tkg-git/wine-tkg-patches/hotfixes/EGS/hotfixes
+RUN rm -fr wine-tkg-git/wine-tkg-patches/hotfixes/EGS
 
 WORKDIR /usr/src/wine-tkg-git/wine-tkg-git
 
